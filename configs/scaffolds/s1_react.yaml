@@ -1,0 +1,6 @@
+# S1 -- ReAct thought/action/observation loop, NO persistent notes.
+# The clean control scaffold: the memory (M) carrier is absent by construction.
+name: "S1"
+kind: "s1_react"
+max_steps: 15
+notes_enabled: false

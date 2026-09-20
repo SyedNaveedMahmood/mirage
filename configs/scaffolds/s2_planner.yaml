@@ -1,0 +1,7 @@
+# S2 -- planner-executor with a writable note store carried across steps.
+# Makes the memory (M) and scaffold-history (H) carriers real. The note store is
+# part of the checkpoint's scaffold_state and is reset by snapshot-restore in CV-2.
+name: "S2"
+kind: "s2_planner"
+max_steps: 15
+notes_enabled: true

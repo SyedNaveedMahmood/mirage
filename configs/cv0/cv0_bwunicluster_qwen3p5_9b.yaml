@@ -1,0 +1,20 @@
+# Full four-part CV-0 suite on bwUniCluster 3.0, served by vLLM on one H100.
+#
+# This is a single-family calibration profile: it runs CV-0(a-d) at the full
+# checkpoint/replicate scale, but it intentionally scopes the family-count gate
+# to Qwen3.5. It does not replace the >=3-family confirmatory population config.
+extends: "cv0_full.yaml"
+
+experiment_id: "cv0_bwunicluster_qwen3p5_9b"
+notes: >-
+  Full CV-0(a-d) cluster calibration for Qwen/Qwen3.5-9B at pinned revision
+  c202236235762e1c871ad0ccb60c8ee5ba337b9a, served by vLLM in non-thinking mode.
+
+models:
+  - "../models/openai_compat_vllm.yaml"
+
+# One model family is intentionally in scope for this allocation. All other
+# preregistered scientific thresholds remain inherited from cv0_full.yaml.
+gates:
+  min_families_pass_capability: 1
+  kill_min_families: 1

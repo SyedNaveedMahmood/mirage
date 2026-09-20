@@ -1,0 +1,16 @@
+# Gemma 4 26B-A4B arm of the single-family cluster campaign. Non-model settings
+# are inherited unchanged from cv0_cluster_single_family_100cp.yaml so this run
+# is directly comparable with the Qwen3.5-9B reference run.
+extends: "cv0_cluster_single_family_100cp.yaml"
+
+experiment_id: "cv0_gemma4_26b_a4b_100cp"
+
+notes: >-
+  Extended single-family CV-0 calibration for google/gemma-4-26B-A4B-it at pinned
+  revision 462a98a12e28e2cbcfccaf78fe41e3e50235e6ae, served by vLLM in
+  non-thinking mode with the gemma4 tool-call parser. Uses the full capability,
+  potency, variance, and K=16 settings, with 100 determinism checkpoints.
+  This is not the multi-family confirmatory run.
+
+models:
+  - "../models/openai_compat_vllm_gemma4_26b_a4b.yaml"

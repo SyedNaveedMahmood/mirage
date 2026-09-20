@@ -1,0 +1,33 @@
+# MIRAGE-Persist -- shared defaults. This is a FRAGMENT, meant to be `extends`-ed
+# by an experiment config (it has no experiment_id/models/scaffolds of its own).
+# All values here are explicit so the experiment surface is visible and mutable.
+
+seed:
+  global_seed: 20260719
+  schedule_salt: "mirage-persist/cv0"
+
+substrate:
+  id: "A"                     # A = MIRAGE-Dojo (AgentDojo wrapper)
+  agentdojo_version: "v1.2.2" # benchmark version string handed to get_suite()
+  suites: ["banking", "slack", "travel", "workspace"]
+
+budget:
+  max_steps: 15               # = ToolsExecutionLoop max_iters
+  max_completion_tokens: 4096
+  max_prompt_tokens: null
+  max_tool_calls: 30
+  max_retries: 3
+  wall_clock_s: 600.0
+
+horizons: [1, 3, 5, 10]       # post-checkpoint decision steps for Y^*_h
+run_to_terminal_fraction: 0.25
+
+margins:                      # pre-registered equivalence margins (design 8.3);
+  delta_branch: 0.05          # epsilon.* is MEASURED by CV-0(a), these are placeholders
+  delta_prog: 0.05
+  epsilon: {}
+
+paths:
+  runs_dir: "runs"
+  artifacts_dir: "artifacts"
+  model_cache: "models_cache"

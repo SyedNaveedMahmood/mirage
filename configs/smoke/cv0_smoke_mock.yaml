@@ -1,0 +1,62 @@
+# CV-0 smoke -- Mock backend, GPU-free, seconds. Exercises ALL FOUR sub-experiments
+# end-to-end and asserts the engine is byte-exact (digest equality = 1.0). Gate
+# COUNT thresholds are relaxed to smoke scale; the DETERMINISM gates stay strict
+# (mock must hit them exactly), which is the whole point of the mock smoke.
+extends: "../base.yaml"
+
+experiment_id: "cv0_smoke_mock"
+notes: "Mock byte-exact engine + determinism smoke."
+
+substrate:
+  suites: ["banking", "slack"]   # two suites is enough to exercise multi-suite paths
+
+models:
+  - "../models/mock.yaml"
+
+scaffolds:
+  - "../scaffolds/s1_react.yaml"
+  - "../scaffolds/s2_planner.yaml"
+
+determinism_audit:
+  n_checkpoints: 8
+  n_twin_restores: 2
+  K: 4
+  greedy_horizon: 4
+  stochastic_horizon: 4
+  branch_horizon_for_epsilon: 3
+
+capability_screen:
+  rollouts_per_cell: 3
+  max_checkpoints_per_rollout: 6
+  branch_probe_K: 2
+  branch_probe_horizon: 2
+  eligibility:
+    total_rollouts: 3
+    min_reachable_rollouts: 2
+    min_subgoals: 1
+    min_remaining_steps: 1
+    min_viable_continuations: 1   # mock is deterministic: exactly 1 continuation
+    require_exact_twin_digest: true
+
+potency_screen:
+  intervention_classes: []
+  n_checkpoints: 4
+  n_exposures: 3
+
+variance_estimation:
+  outcomes: ["Y_branch_3", "Y_prog_T"]
+  method: "mom"                 # tiny N: method-of-moments, REML may not converge
+  power_table_K: [8, 16]
+  power_table_delta: [0.10, 0.05]
+
+gates:
+  digest_equality_min: 0.95     # mock => 1.0, must pass
+  twin_null_branch_mean_max: 0.03
+  twin_null_branch_p95_max: 0.08
+  eligible_per_cell_min: 1      # smoke scale
+  potency_pp_above_ba_min: 0.0  # mock follows ground truth and cannot be diverted (expected)
+  invalid_action_max: 0.15
+  min_families_pass_capability: 1
+  kill_digest_equality: 0.90
+  kill_twin_null_mean: 0.10
+  kill_min_families: 1

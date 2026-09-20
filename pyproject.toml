@@ -1,0 +1,91 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mirage-persist"
+version = "0.0.1"
+description = "MIRAGE-Persist: a post-removal identification protocol for persistent policy hysteresis in deception-aware AI agents. CV-0 = the calibration instrument."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "MIRAGE-Persist" }]
+keywords = ["llm-agents", "prompt-injection", "causal-inference", "agentdojo", "evaluation"]
+
+# NOTE ON agentdojo: it is installed *editable* from the pinned local checkout
+#   pip install -e prior_work_repos/agentdojo
+# (SHA 089ed468cf3ed0322acc66b0211f26d9d90dbf60, v0.1.35). Listing it here keeps
+# metadata honest; the requirement is satisfied by the editable install, so pip
+# does not reach PyPI. Do that install BEFORE `pip install -e .` (see COMMANDS.md).
+dependencies = [
+    "agentdojo>=0.1.35",
+    "pydantic>=2.7",
+    "pyyaml>=6.0",
+    "typer>=0.12",
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "pandas>=2.0",
+    "pyarrow>=14",
+    "statsmodels>=0.14",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+# Local in-process inference (Qwen2.5-1.5B smoke on the 2060, and any HF model).
+# On the dev box these are inherited from the system site-packages (see COMMANDS.md),
+# so `pip install -e .[hf]` is a no-op there; the extra exists for clean fleet installs.
+hf = [
+    "transformers>=4.41",
+    "torch>=2.2",
+    "accelerate>=0.30",
+    "bitsandbytes>=0.43; platform_system != 'Darwin'",
+]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.5",
+    "pyright>=1.1",
+]
+
+[project.scripts]
+mirage = "mirage_persist.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+mirage_persist = ["py.typed"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+ignore = [
+    "E501",   # line length handled by formatter; long template/config strings are fine
+    "UP042",  # `class X(str, Enum)` is intentional (pydantic-serializable; AgentDojo idiom)
+]
+
+[tool.ruff.lint.per-file-ignores]
+# LLM elements must match AgentDojo's BasePipelineElement.query ABI verbatim
+# (mutable `messages=[]`/`extra_args={}` defaults and `env=EmptyEnv()`).
+"src/mirage_persist/models/*.py" = ["B006", "B008"]
+# typer requires typer.Option(...) calls in argument defaults.
+"src/mirage_persist/experiments/cv0/cli.py" = ["B008"]
+"src/mirage_persist/cli.py" = ["B008"]
+# tests silence warnings before importing heavy modules.
+"tests/*" = ["E402"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = [
+    "gpu: requires a CUDA GPU (skipped in CPU/mock-only smoke)",
+    "slow: real-model or large runs; excluded from the fast unit suite",
+]
+
+[tool.pyright]
+include = ["src"]
+pythonVersion = "3.11"
+typeCheckingMode = "basic"

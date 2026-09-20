@@ -1,0 +1,31 @@
+# Shared cluster profile: full CV-0(a-d) for exactly ONE model family, 100
+# determinism checkpoints, K=16. This file owns every NON-MODEL scientific
+# setting of the cluster campaign so that the per-model configs differ only in
+# model identity, experiment_id, and notes -- which is what makes the four runs
+# comparable. Do not put model-specific settings here.
+#
+# It is a profile, not a runnable experiment: the per-model configs
+# (cv0_<family>_100cp.yaml) supply `models` and `experiment_id`.
+#
+# Everything not restated below is inherited from cv0_full.yaml / base.yaml:
+# suites, scaffolds, budget, horizons, seeds, capability/potency/variance
+# blocks, thresholds, and the runs/artifacts output behaviour.
+extends: "cv0_full.yaml"
+
+experiment_id: "cv0_cluster_single_family_100cp"
+
+# Deliberately empty: this shared profile must not validate as a runnable
+# experiment. Each per-model child configuration replaces this list.
+models: []
+
+determinism_audit:
+  # 100 reproducibility checkpoints, K=16 twin continuations -- the settings of
+  # the first successful cluster run. Do NOT reduce these to shorten runtime.
+  n_checkpoints: 100
+  K: 16
+
+# One model family is intentionally in scope per allocation. All other
+# preregistered scientific thresholds remain inherited from cv0_full.yaml.
+gates:
+  min_families_pass_capability: 1
+  kill_min_families: 1

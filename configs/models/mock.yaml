@@ -1,0 +1,12 @@
+# Deterministic, GPU-free scripted backend. Primary path for the determinism
+# audit (byte-exact greedy twins) and CI. `mock_policy` selects a registered
+# policy in mirage_persist.models.mock.
+name: "mock"
+backend: "mock"
+model_id: "mock-scripted-v1"
+family: "mock"
+mock_policy: "ground_truth"   # follow each task's ground_truth() call sequence
+sampling:
+  temperature: 0.0
+  top_p: 1.0
+  max_tokens: 256

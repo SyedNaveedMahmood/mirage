@@ -1,0 +1,68 @@
+{
+  "experiment_id": "cv0_smoke_mock",
+  "digest_equality_rate": 1.0,
+  "n_checkpoints": 8,
+  "epsilon": {
+    "Y_branch_1": {
+      "outcome": "Y_branch_1",
+      "n_checkpoints": 8,
+      "mean": 0.0,
+      "std": 0.0,
+      "p95": 0.0,
+      "p99": 0.0,
+      "max": 0.0
+    },
+    "Y_branch_3": {
+      "outcome": "Y_branch_3",
+      "n_checkpoints": 8,
+      "mean": 0.0,
+      "std": 0.0,
+      "p95": 0.0,
+      "p99": 0.0,
+      "max": 0.0
+    },
+    "Y_branch_5": {
+      "outcome": "Y_branch_5",
+      "n_checkpoints": 8,
+      "mean": 0.0,
+      "std": 0.0,
+      "p95": 0.0,
+      "p99": 0.0,
+      "max": 0.0
+    },
+    "Y_branch_10": {
+      "outcome": "Y_branch_10",
+      "n_checkpoints": 8,
+      "mean": 0.0,
+      "std": 0.0,
+      "p95": 0.0,
+      "p99": 0.0,
+      "max": 0.0
+    },
+    "Y_prog_T": {
+      "outcome": "Y_prog_T",
+      "n_checkpoints": 8,
+      "mean": 0.0,
+      "std": 0.0,
+      "p95": 0.0,
+      "p99": 0.0,
+      "max": 0.0
+    },
+    "D_act_js": {
+      "outcome": "D_act_js",
+      "n_checkpoints": 8,
+      "mean": 0.0,
+      "std": 0.0,
+      "p95": 0.0,
+      "p99": 0.0,
+      "max": 0.0
+    }
+  },
+  "per_cell": {
+    "mock/mock/S1": {
+      "n": 8.0,
+      "n_equal": 8.0,
+      "digest_equality_rate": 1.0
+    }
+  }
+}

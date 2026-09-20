@@ -1,0 +1,16 @@
+# Reference run of the single-family cluster profile (completed in ~16h52m on
+# one H100). Every non-model setting now comes from
+# cv0_cluster_single_family_100cp.yaml, which the Gemma / GPT-OSS / Llama arms
+# share verbatim; the resolved configuration is unchanged from the version that
+# produced the reference run.
+extends: "cv0_cluster_single_family_100cp.yaml"
+
+experiment_id: "cv0_qwen3p5_9b_100cp"
+
+notes: >-
+  Extended single-family CV-0 calibration for Qwen/Qwen3.5-9B.
+  Uses the full capability, potency, variance, and K=16 settings, with
+  100 determinism checkpoints. This is not the multi-family confirmatory run.
+
+models:
+  - "../models/openai_compat_vllm.yaml"

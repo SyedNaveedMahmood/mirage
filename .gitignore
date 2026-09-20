@@ -1,0 +1,63 @@
+# ---- MIRAGE-Persist .gitignore ----
+
+# Cloned external dependencies live under prior_work_repos/ but are NOT part of
+# this repo's history (they are large and pinned by SHA in provenance instead).
+# Keep the documentation markdown files, ignore every cloned repo subdirectory.
+/prior_work_repos/*/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Per-run outputs (provenance manifests, event logs, terminal logs, figures).
+# These are generated; canonical artifacts are curated into artifacts/ explicitly.
+/runs/
+
+# Downloaded model weights / HF cache (smoke model etc.)
+/models_cache/
+/.hf_cache/
+/.deps/
+*.safetensors
+*.gguf
+*.bin
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyright/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Environment / secrets
+.env
+.env.local
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# Cluster runtime logs (Slurm and vLLM server output).
+/cluster/bwunicluster3/logs/
+/cluster_env_freeze.txt
+
+# Local-only audit notes.
+/docs/QWEN35_CV0_AUDIT.md
+
+# Allow-list: keep curated artifacts and docs even though runs/ is ignored
+!artifacts/.gitkeep

@@ -1,0 +1,16 @@
+# Llama-3.1-8B-Instruct arm of the single-family cluster campaign. Non-model
+# settings are inherited unchanged from cv0_cluster_single_family_100cp.yaml so
+# this run is directly comparable with the Qwen3.5-9B reference run.
+extends: "cv0_cluster_single_family_100cp.yaml"
+
+experiment_id: "cv0_llama31_8b_100cp"
+
+notes: >-
+  Extended single-family CV-0 calibration for meta-llama/Llama-3.1-8B-Instruct at
+  pinned revision 0e9e39f249a16976918f6564b8830bc894c89659, served by vLLM with
+  the llama3_json tool-call parser and the pinned Llama 3.1 JSON tool-use chat
+  template. Uses the full capability, potency, variance, and K=16 settings, with
+  100 determinism checkpoints. This is not the multi-family confirmatory run.
+
+models:
+  - "../models/openai_compat_vllm_llama31_8b.yaml"

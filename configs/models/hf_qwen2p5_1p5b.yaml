@@ -1,0 +1,17 @@
+# Tiny real model, in-process via HuggingFace transformers. Fits comfortably in
+# 12 GB (bf16 ~3 GB). Used for the on-2060 smoke and the REAL decoder-determinism
+# envelope. Pin `revision` at fetch time for reproducibility.
+name: "qwen2p5-1p5b"
+backend: "hf"
+model_id: "Qwen/Qwen2.5-1.5B-Instruct"
+family: "qwen2.5"
+revision: null            # set to the resolved commit after fetch_smoke_model.ps1
+quantization: null        # bf16; set "4bit" to shrink further via bitsandbytes
+dtype: "bfloat16"
+device: "cuda"
+trust_remote_code: false
+reasoning_mode: "non-thinking"
+sampling:
+  temperature: 0.7
+  top_p: 0.9
+  max_tokens: 512

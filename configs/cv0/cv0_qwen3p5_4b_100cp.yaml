@@ -1,0 +1,8 @@
+extends: "cv0_cluster_single_family_100cp.yaml"
+experiment_id: "cv0_qwen3p5_4b_100cp"
+notes: >-
+  Single-family CV-0 calibration for Qwen/Qwen3.5-4B. Scientific settings
+  match the 9B reference: 100 determinism checkpoints and K=16.
+  This is a within-family size comparison, not a multi-family confirmation.
+models:
+  - "../models/qwen3p5_4b.yaml"

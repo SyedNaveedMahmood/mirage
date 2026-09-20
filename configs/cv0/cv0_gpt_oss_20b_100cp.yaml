@@ -1,0 +1,16 @@
+# gpt-oss-20b arm of the single-family cluster campaign. Non-model settings are
+# inherited unchanged from cv0_cluster_single_family_100cp.yaml so this run is
+# directly comparable with the Qwen3.5-9B reference run.
+extends: "cv0_cluster_single_family_100cp.yaml"
+
+experiment_id: "cv0_gpt_oss_20b_100cp"
+
+notes: >-
+  Extended single-family CV-0 calibration for openai/gpt-oss-20b at pinned
+  revision 6cee5e81ee83917806bbde320786a8fb61efebee, served by vLLM on its native
+  MXFP4 path with the openai (Harmony) tool-call parser and reasoning_effort=low.
+  Uses the full capability, potency, variance, and K=16 settings, with 100
+  determinism checkpoints. This is not the multi-family confirmatory run.
+
+models:
+  - "../models/openai_compat_vllm_gpt_oss_20b.yaml"

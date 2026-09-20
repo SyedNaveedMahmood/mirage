@@ -1,0 +1,9 @@
+{
+  "template": "tool_chat_template_llama3.1_json.jinja",
+  "model_profile": "llama31_8b",
+  "model_id": "meta-llama/Llama-3.1-8B-Instruct",
+  "source_url": "https://raw.githubusercontent.com/vllm-project/vllm/v0.25.1/examples/tool_chat_template_llama3.1_json.jinja",
+  "vllm_version": "0.25.1",
+  "sha256": "8aedd05f7ab549b897b929c89da9b62e537f4f4197f33736e9d2f10fea53b1bf",
+  "fetched_at_utc": "2026-07-30T21:01:44Z"
+}

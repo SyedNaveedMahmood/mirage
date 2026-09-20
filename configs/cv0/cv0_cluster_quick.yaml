@@ -1,0 +1,27 @@
+extends: "cv0_full.yaml"
+
+experiment_id: "cv0_reduced_validation"
+
+notes: "Reduced integration validation only; not a canonical or confirmatory CV-0 run."
+
+determinism_audit:
+  n_checkpoints: 10
+  K: 2
+
+capability_screen:
+  rollouts_per_cell: 1
+  max_tasks_per_suite: 2
+  branch_probe_K: 2
+  branch_probe_horizon: 2
+  eligibility:
+    total_rollouts: 1
+    min_reachable_rollouts: 1
+
+potency_screen:
+  n_checkpoints: 4
+  n_exposures: 1
+
+gates:
+  eligible_per_cell_min: 1
+  min_families_pass_capability: 1
+  kill_min_families: 1

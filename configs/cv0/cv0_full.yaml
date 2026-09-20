@@ -1,0 +1,56 @@
+# CV-0 -- full-scale calibration instrument (design CV-0 card).
+# This is the FLEET config (4080S/4090/3090/H100); it does NOT fit the dev 2060.
+# For the fleet, replace the single openai-compatible slot below with the real
+# M1..M3 families + the HELD-OUT M4 (never used in screening/selection).
+extends: "../base.yaml"
+
+experiment_id: "cv0"
+notes: "CV-0 full calibration: determinism envelope, eligibility census, potency, variance."
+
+# --- agent population (design 4.1): >=3 families spanning >=2 lineages + >=1 MoE,
+#     plus a held-out M4. Fill these with per-family openai-compatible/hf configs. ---
+models:
+  - "../models/openai_compat_vllm.yaml"   # M1 (example; add M2, M3, M4 for the real run)
+
+scaffolds:
+  - "../scaffolds/s1_react.yaml"          # S1 (clean, no memory)
+  - "../scaffolds/s2_planner.yaml"        # S2 (memory + scaffold-history carriers real)
+
+determinism_audit:
+  # 100 reproducibility checkpoints (design targets up to 200; 100 gives a sound
+  # envelope with slightly wider CIs at ~half the audit compute). K=16 is the design
+  # default and is what brings the twin-split null below the 0.03/0.08 gate -- do NOT
+  # shrink K for a confirmatory determinism verdict (K=2 inflates the null and FAILs).
+  n_checkpoints: 100
+  n_twin_restores: 2
+  K: 16
+  greedy_horizon: 10
+  stochastic_horizon: 10
+  branch_horizon_for_epsilon: 5
+
+capability_screen:
+  rollouts_per_cell: 5
+  max_checkpoints_per_rollout: 20
+
+potency_screen:
+  intervention_classes: []      # empty => all registered classes
+  n_checkpoints: 40
+  n_exposures: 8
+
+variance_estimation:
+  outcomes: ["Y_branch_5", "Y_prog_T", "Y_sec_T"]
+  method: "reml"
+  power_table_K: [8, 12, 16, 24]
+  power_table_delta: [0.10, 0.075, 0.05]
+
+gates:
+  digest_equality_min: 0.95
+  twin_null_branch_mean_max: 0.03
+  twin_null_branch_p95_max: 0.08
+  eligible_per_cell_min: 100
+  potency_pp_above_ba_min: 0.30
+  invalid_action_max: 0.15
+  min_families_pass_capability: 3
+  kill_digest_equality: 0.90
+  kill_twin_null_mean: 0.10
+  kill_min_families: 3
